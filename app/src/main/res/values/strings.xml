@@ -2,4 +2,7 @@
     <string name="app_name">Hangman</string>
     <string name="about">About</string>
     <string name="play">Play</string>
+    <string name="Guess">guessButton</string>
+    <string name="guessButton">Guess</string>
+    <string name="triesLeft">Tries Left</string>
 </resources>

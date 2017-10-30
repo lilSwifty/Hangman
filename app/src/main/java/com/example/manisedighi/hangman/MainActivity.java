@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
             case (R.id.about_logo):
                 onAboutClicked(findViewById(R.id.about_logo));
                 return true;
+            case (R.id.play_logo):
+                onPlayClicked(findViewById(R.id.play_logo));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

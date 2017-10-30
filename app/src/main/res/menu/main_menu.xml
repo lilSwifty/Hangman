@@ -4,6 +4,11 @@
 
 
     <item
+        android:id="@+id/play_logo"
+        android:icon="@android:drawable/ic_media_play"
+        android:title="Item"
+        app2:showAsAction="always" />
+    <item
         android:id="@+id/about_logo"
         android:icon="@drawable/ic_about"
         android:title="Item"
