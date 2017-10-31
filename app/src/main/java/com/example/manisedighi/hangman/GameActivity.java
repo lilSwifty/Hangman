@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.manisedighi.hangman.R.id.guessTextView;
 import static com.example.manisedighi.hangman.R.id.secretWord;
 import static com.example.manisedighi.hangman.R.id.usedLetters;
 
@@ -19,10 +18,15 @@ public class GameActivity extends AppCompatActivity {
     private EditText guess;
     private HangmanGame hangman;
     private TextView answer;
-    private TextView guessView;
     private TextView totalTries;
+    private ImageView img;
+    private String word;
+
+
     private int tries = 10;
-    private int points;
+    private int picIdx = 0;
+
+
 
 
 
@@ -31,38 +35,68 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_game);
+
         used = (TextView) findViewById(usedLetters);
+
         used = (TextView) findViewById(R.id.usedLetters);
-        guessView = (TextView) findViewById(guessTextView);
+
         hangman = new HangmanGame();
+
         answer = (TextView) findViewById(secretWord);
-        answer.setText(hangman.randomWord());
+
+        word = hangman.randomWord();
+
+        answer.setText(hangman.hideWord(word));
+
         totalTries = (TextView) findViewById(R.id.triesLeft);
+
         totalTries.setText("Tries left: " + tries);
-        ImageView img = (ImageView) findViewById(R.id.imageView);
-        points = 0;
+
+        img = (ImageView) findViewById(R.id.imageView);
+
 
 
     }
 
-    public int getImg(int index) {
 
-        switch(index){
-            case 0: return R.drawable.hang9;
-            case 1: return R.drawable.hang8;
-            case 2: return R.drawable.hang7;
-            case 3: return R.drawable.hang6;
-            case 4: return R.drawable.hang5;
-            case 5: return R.drawable.hang4;
-            case 6: return R.drawable.hang3;
-            case 7: return R.drawable.hang2;
-            case 8: return R.drawable.hang1;
-            case 9: return R.drawable.hang0;
+    public int getImg() {
 
-            default: return -1;
+        switch(picIdx){
+            case 0:
+                img.setImageResource(R.drawable.hang9);
+                break;
+            case 1:
+                img.setImageResource(R.drawable.hang8);
+                break;
+            case 2:
+                img.setImageResource(R.drawable.hang7);
+                break;
+            case 3:
+                img.setImageResource(R.drawable.hang6);
+                break;
+            case 4:
+                img.setImageResource(R.drawable.hang5);
+                break;
+            case 5:
+                img.setImageResource(R.drawable.hang4);
+                break;
+            case 6:
+                img.setImageResource(R.drawable.hang3);
+                break;
+            case 7:
+                img.setImageResource(R.drawable.hang2);
+                break;
+            case 8:
+                img.setImageResource(R.drawable.hang1);
+                break;
+            case 9:
+                img.setImageResource(R.drawable.hang0);
+                break;
+
         }
-
+        return picIdx;
     }
 
 
@@ -71,39 +105,57 @@ public class GameActivity extends AppCompatActivity {
     public void takeGuess(View view){
         guess = (EditText) findViewById(R.id.guessTextView);
         String letter = guess.getText().toString();
-        //hangman.addLettersToList(letter.charAt(0));
         used = (TextView) findViewById(R.id.usedLetters);
         used.setText(hangman.getGuessed());
 
 
 
-            if (tries == 0) {
-
-                Intent intent = new Intent(this, ResultActivity.class);
-                startActivity(intent);
+            if (letter.length() < 1 || (letter.length() > 1)) {
+                Toast.makeText(getApplicationContext(), "You need to type a single letter.",
+                        Toast.LENGTH_SHORT).show();
             }
             else if(hangman.checkLetter(letter.charAt(0))){
                 Toast.makeText(getApplicationContext(), "You've allready guessed this letter.",
                         Toast.LENGTH_SHORT).show();
 
-            }else if (letter.length() < 1 || (letter.length() > 1)) {
-                Toast.makeText(getApplicationContext(), "You need to type a single letter.",
-                        Toast.LENGTH_SHORT).show();
             }
             else {
-
-
 
                 if (letter.length() == 1) {
 
                     if (!hangman.checkLetter(letter.charAt(0))){
                         if (hangman.hitLetter(letter)) {
                             hangman.makeGuess(letter);
-                            points++;
+                            if (!hangman.hasWon()){
+                                Intent intent = new Intent(this, ResultActivity.class);
+                                intent.putExtra("TRIES", totalTries.getText().toString());
+                                intent.putExtra("WORD", answer.getText().toString());
+                                intent.putExtra("WON_OR_LOST", "won");
+
+
+                                startActivity(intent);
+                            }
+
                         }
-                        else
-                            hangman.tries();
+                        else {
+                            picIdx++;
+                            tries--;
                             hangman.addLettersToList(letter.charAt(0));
+                            getImg();
+
+                            if (tries == 0 ) {
+
+                                Intent intent = new Intent(this, ResultActivity.class);
+                                intent.putExtra("TRIES", totalTries.getText().toString());
+                                answer.setText(word);
+                                intent.putExtra("WORD", answer.getText().toString());
+                                intent.putExtra("WON_OR_LOST", "lost");
+
+
+                                startActivity(intent);
+                            }
+
+                        }
 
                     }
 
@@ -115,8 +167,7 @@ public class GameActivity extends AppCompatActivity {
         guess.setText("");
         used.setText(hangman.getGuessed());
         answer.setText(hangman.getGuess());
-
-
+        totalTries.setText("Tries left: " + tries);
 
     }
 
