@@ -51,15 +51,6 @@ public class HangmanGame {
 
         realWord = listWords[idx];
 
-        /*
-        guess = new char[mysteryWord.length()];
-
-        for (int p = 0; p < mysteryWord.length(); p++)
-            guess[p] = '*';
-
-        return String.valueOf(guess);
-        */
-
         return realWord;
 
     }
@@ -150,55 +141,3 @@ public class HangmanGame {
 
 }
 
-/*
-
-
-
-    public String checkPlayer(String letter){
-
-        boolean visible = false;
-
-
-        for (int i = 0; i < mysteryWord.length(); i++) {
-            if (letter.charAt(0) == mysteryWord.charAt(i)) {
-                guess[i] = letter.charAt(0);
-            }
-        }
-        return String.valueOf(guess);
-    }
-
-
-
-    public String hideWord(){
-
-        char[] guess = mysteryWord.toCharArray();
-
-        for (int i = 0; i < mysteryWord.length(); i++) {
-            guess[i] = '_';
-        }
-        return guess.toString();
-    }
-
-
-    char playerGuess = sc.next().charAt(0);
- for (int j = 0; j < mysteryWord.length(); j++) {
- if (playerGuess == mysteryWord.charAt(j))
- guess[j] = playerGuess;
- }
-
-
- public boolean checkWord(char letter){
-
-        boolean containing = false;
-
-        for (char c: guess) {
-            if (c == letter){
-                containing = true;
-            }
-        }
-
-        return containing;
-
-    }
-
-    */

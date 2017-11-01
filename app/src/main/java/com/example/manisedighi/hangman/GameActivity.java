@@ -3,6 +3,8 @@ package com.example.manisedighi.hangman;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,15 +23,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView totalTries;
     private ImageView img;
     private String word;
-
-
     private int tries = 10;
     private int picIdx = 0;
-
-
-
-
-
 
 
     @Override
@@ -110,14 +105,17 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-            if (letter.length() < 1 || (letter.length() > 1)) {
-                Toast.makeText(getApplicationContext(), "You need to type a single letter.",
+            if (letter.matches(".*\\d.*")) {
+                Toast.makeText(getApplicationContext(), "Numbers are not allowed, please type a letter.",
                         Toast.LENGTH_SHORT).show();
             }
-            else if(hangman.checkLetter(letter.charAt(0))){
-                Toast.makeText(getApplicationContext(), "You've allready guessed this letter.",
+            else if(letter.length() < 1 || (letter.length() > 1)){
+                Toast.makeText(getApplicationContext(), "You need to type a single letter",
                         Toast.LENGTH_SHORT).show();
 
+            }else if(hangman.checkLetter(letter.charAt(0))){
+                Toast.makeText(getApplicationContext(),"You've allready guessed this letter.",
+                        Toast.LENGTH_SHORT).show();
             }
             else {
 
@@ -171,38 +169,35 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case (R.id.about_logo):
+                onAboutClicked(findViewById(R.id.about_logo));
+                return true;
+            case (R.id.return_logo):
+                backToMain(findViewById(R.id.return_logo));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
+    public void onAboutClicked(View view){
+        Intent intent = new Intent(this, AboutActivity.class);
 
+        startActivity(intent);
+    }
 
+    public void backToMain(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.game_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
 }
-
-/*
-if (points == hangman.randomWord().length()){
-            Intent intent = new Intent(this, ResultActivity.class);
-            startActivity(intent);
- */
-
-/*
- else {
-
-                    tries--;
-                    totalTries.setText("Tries left: " + tries);
-                    if (tries == 0) {
-                        Intent intent = new Intent(this, ResultActivity.class);
-                        startActivity(intent);
-                    }
-                }
- */
-
-/*
-                    else {
-                        for (int i = 0; i < hangman.randomWord().length(); i++) {
-
-                            if (letter.charAt(0) == hangman.randomWord().charAt(i)) {
-                                points++;
-                            }
-                         }
-                    }
-                    */

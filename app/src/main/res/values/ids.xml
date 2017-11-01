@@ -2,4 +2,5 @@
 <resources>
     <item name="play_logo" type="id">Play</item>
     <item name="getImg" type="id">getImg</item>
+    <item name="return_logo" type="id">return_logo</item>
 </resources>
