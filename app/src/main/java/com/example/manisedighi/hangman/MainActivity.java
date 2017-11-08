@@ -17,12 +17,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /**
+     * opens the acitivity window when clicked
+     * @param view
+     */
     public void onAboutClicked(View view){
         Intent intent = new Intent(this, AboutActivity.class);
 
         startActivity(intent);
     }
 
+    /**
+     * Actionbar for navigating
+     * @param item
+     * @return chosen action
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -37,12 +46,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Starts a new game in the GameActivity window
+     * @param view
+     */
     public void onPlayClicked(View view){
         Intent intent = new Intent(this, GameActivity.class);
 
         startActivity(intent);
     }
 
+    /**
+     * Method for actionbar
+     * @param menu
+     * @return actionbar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

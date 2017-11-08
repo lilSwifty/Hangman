@@ -42,6 +42,20 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This button starts a new game with a new word in the gameactivity window
+     * @param view
+     */
+    public void newGame(View view){
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    /**
+     * returns to the mainactivity window
+     * @param view
+     */
     public void backToMain(View view){
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |

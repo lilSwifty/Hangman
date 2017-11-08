@@ -14,6 +14,9 @@ import android.widget.Toast;
 import static com.example.manisedighi.hangman.R.id.secretWord;
 import static com.example.manisedighi.hangman.R.id.usedLetters;
 
+/**
+ * The game activity, this is where the game is played.
+ */
 public class GameActivity extends AppCompatActivity {
 
     private TextView used;
@@ -43,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
 
         word = hangman.randomWord();
 
-        answer.setText(hangman.hideWord(word));
+        answer.setText(hangman.hideWord());
 
         totalTries = (TextView) findViewById(R.id.triesLeft);
 
@@ -56,6 +59,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * changes the hangman-image depending on how many tries the player has left
+     * @return img of hangman
+     */
     public int getImg() {
 
         switch(picIdx){
@@ -95,8 +102,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * This method starts when the button is clicked. It will check a given input from the textview.
+     * @param view
+     */
     public void takeGuess(View view){
         guess = (EditText) findViewById(R.id.guessTextView);
         String letter = guess.getText().toString();
@@ -169,6 +178,11 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method for actionbar, contains two buttons, one for accessing the about page, one for quitting the game and returning to main activity
+     * @param item
+     * @return chosen activity
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -183,17 +197,30 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * method for clicking the about button in the actionbar
+     * @param view
+     */
     public void onAboutClicked(View view){
         Intent intent = new Intent(this, AboutActivity.class);
 
         startActivity(intent);
     }
 
+    /**
+     * method for clicking the quit logo in the actionbar
+     * @param view
+     */
     public void backToMain(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * This is needen for the actionbar to be visibile properly
+     * @param menu
+     * @return onCreateOptionsMenu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.game_menu, menu);
